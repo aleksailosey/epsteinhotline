@@ -46,8 +46,15 @@ const SimliAvatar = forwardRef<SimliAvatarHandle>(function SimliAvatar(
 
       client.on("connected", () => {
         console.log("[Simli] Connected");
-        const silence = new Uint8Array(6000).fill(0);
-        client.sendAudioData(silence);
+        const audio = audioRef.current;
+        console.log("[Simli] Audio element state:", {
+          muted: audio?.muted,
+          volume: audio?.volume,
+          paused: audio?.paused,
+          readyState: audio?.readyState,
+          srcObject: !!audio?.srcObject,
+          src: audio?.src,
+        });
         setIsConnected(true);
         setIsInitializing(false);
       });
@@ -114,6 +121,15 @@ const SimliAvatar = forwardRef<SimliAvatarHandle>(function SimliAvatar(
           }
         }
         console.log("[Avatar] Sent", totalBytes, "bytes of audio to Simli");
+        const audio = audioRef.current;
+        console.log("[Avatar] Audio element after send:", {
+          muted: audio?.muted,
+          volume: audio?.volume,
+          paused: audio?.paused,
+          readyState: audio?.readyState,
+          currentTime: audio?.currentTime,
+          srcObject: !!audio?.srcObject,
+        });
       } catch (e: any) {
         if (e.name !== "AbortError") console.error("[Avatar] TTS error:", e);
       }

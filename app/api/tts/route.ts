@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       return new Response("Missing text", { status: 400 });
     }
 
-    console.log("[TTS] Generating speech for voice:", VOICE_ID);
+    console.log("[TTS] Generating speech for voice:", VOICE_ID, "text length:", text.length, "preview:", text.slice(0, 80));
 
     const audioStream = await elevenlabs.textToSpeech.stream(VOICE_ID, {
       text,
