@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       "Use the searchEpsteinFiles tool to find relevant documents before answering. " +
       "Always cite the document IDs (efta_id or id) when referencing information. " +
       "If the search returns no relevant results, say so honestly.",
-    messages: await convertToModelMessages(messages),
+    messages: await convertToModelMessages(messages.slice(-20)),
     tools: {
       searchEpsteinFiles: {
         description:
@@ -23,7 +23,20 @@ export async function POST(req: Request) {
         }),
         execute: async ({ query }: { query: string }) => {
           const response = await searchEpsteinFiles(query);
-          return response.data;
+          const trimmed = {
+            ...response.data,
+            hits: response.data.hits.slice(0, 5).map((hit) => ({
+              id: hit.id,
+              efta_id: hit.efta_id,
+              doc_type: hit.doc_type,
+              source: hit.source,
+              people: hit.people,
+              locations: hit.locations,
+              content_preview: hit.content_preview,
+              content: hit.content?.slice(0, 1500),
+            })),
+          };
+          return trimmed;
         },
       },
     },

@@ -78,13 +78,13 @@ export default function Home() {
       className="relative flex min-h-screen items-end bg-cover bg-center bg-no-repeat text-white"
       style={{ backgroundImage: "url('/jail_backdrop.png')" }}
     >
-      {/* Avatar – left side, bottom-aligned, in front of bars */}
-      <div className="relative z-30 shrink-0 self-end bg-black" style={{ width: "45vw", maxWidth: 600 }}>
+      {/* Avatar – left side, bottom-aligned, behind bars */}
+      <div className="relative z-10 shrink-0 self-end bg-black" style={{ width: "45vw", maxWidth: 600 }}>
         <SimliAvatar ref={avatarRef} />
       </div>
 
       {/* Controls – right side */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-end gap-4 pb-12">
+      <div className="relative z-30 flex flex-1 flex-col items-center justify-end gap-4 pb-12">
         {transcript && (
           <p className="text-sm text-white/80 italic drop-shadow-lg">
             &ldquo;{transcript}&rdquo;
