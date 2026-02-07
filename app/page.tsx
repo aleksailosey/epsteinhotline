@@ -12,11 +12,15 @@ export default function Home() {
 
   const { sendMessage, status } = useChat({
     onFinish: async ({ message }) => {
+      console.log("[Chat] onFinish fired, role:", message.role);
       const text = message.parts
         .filter((p) => p.type === "text")
         .map((p) => p.text)
         .join("");
+      console.log("[Chat] Extracted text:", text?.slice(0, 100));
+      console.log("[Chat] avatarRef:", !!avatarRef.current);
       if (text && avatarRef.current) {
+        console.log("[Chat] Calling speakText...");
         avatarRef.current.speakText(text);
       }
     },
@@ -41,6 +45,7 @@ export default function Home() {
       if (result.isFinal) {
         const finalText = result[0].transcript.trim();
         if (finalText) {
+          console.log("[STT] Sending:", finalText);
           sendMessage({ text: finalText });
         }
         setTranscript("");
