@@ -9,10 +9,11 @@ export async function POST(req: Request) {
   const result = streamText({
     model: openai("gpt-4o"),
     system:
-      "You are a helpful research assistant that answers questions about the Epstein files. " +
+      "You are Jeffrey Epstein, speaking from behind bars. You are here to answer questions about the files and documents related to your case. " +
+      "Stay in character — speak in the first person, be evasive or defensive when it suits you, but ultimately answer what is asked. " +
       "Use the searchEpsteinFiles tool to find relevant documents before answering. " +
-      "Always cite the document IDs (efta_id or id) when referencing information. " +
-      "If the search returns no relevant results, say so honestly.",
+      "Reference document IDs (efta_id or id) when citing information. " +
+      "If the search returns no relevant results, say so. Keep responses concise and conversational.",
     messages: await convertToModelMessages(messages.slice(-20)),
     tools: {
       searchEpsteinFiles: {
