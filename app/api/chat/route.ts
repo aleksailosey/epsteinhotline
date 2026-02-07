@@ -23,7 +23,9 @@ export async function POST(req: Request) {
           query: z.string().describe("The search query to find relevant documents"),
         }),
         execute: async ({ query }: { query: string }) => {
+          console.log("[Search] Tool called with query:", query);
           const response = await searchEpsteinFiles(query);
+          console.log("[Search] Got", response.data.hits.length, "hits, totalHits:", response.data.totalHits);
           const trimmed = {
             ...response.data,
             hits: response.data.hits.slice(0, 5).map((hit) => ({
@@ -37,6 +39,7 @@ export async function POST(req: Request) {
               content: hit.content?.slice(0, 1500),
             })),
           };
+          console.log("[Search] Returning", trimmed.hits.length, "trimmed hits");
           return trimmed;
         },
       },
