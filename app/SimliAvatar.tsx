@@ -124,7 +124,7 @@ const SimliAvatar = forwardRef<SimliAvatarHandle>(function SimliAvatar(
   useImperativeHandle(ref, () => ({ speakText }), [speakText]);
 
   return (
-    <div className="relative aspect-square w-full max-w-[300px] overflow-hidden rounded-xl border border-white/10 bg-white/5">
+    <div className="relative aspect-square w-full overflow-hidden">
       {isInitializing && (
         <div className="absolute inset-0 flex items-center justify-center">
           <p className="animate-pulse text-sm text-white/50">

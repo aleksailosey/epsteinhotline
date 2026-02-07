@@ -74,18 +74,27 @@ export default function Home() {
   }, [isListening]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
-      <h1 className="mb-8 text-2xl font-bold">Chat with the Epstein Files</h1>
+    <div
+      className="relative flex min-h-screen items-end bg-cover bg-center bg-no-repeat text-white"
+      style={{ backgroundImage: "url('/jail_backdrop.png')" }}
+    >
+      {/* Avatar – left side, bottom-aligned, in front of bars */}
+      <div className="relative z-30 shrink-0 self-end bg-black" style={{ width: "45vw", maxWidth: 600 }}>
+        <SimliAvatar ref={avatarRef} />
+      </div>
 
-      <SimliAvatar ref={avatarRef} />
-
-      <div className="mt-6 flex flex-col items-center gap-4">
+      {/* Controls – right side */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-end gap-4 pb-12">
         {transcript && (
-          <p className="text-sm text-white/60 italic">&ldquo;{transcript}&rdquo;</p>
+          <p className="text-sm text-white/80 italic drop-shadow-lg">
+            &ldquo;{transcript}&rdquo;
+          </p>
         )}
 
         {isLoading && (
-          <p className="animate-pulse text-sm text-white/40">Thinking...</p>
+          <p className="animate-pulse text-sm text-white/60 drop-shadow-lg">
+            Thinking...
+          </p>
         )}
 
         <button
@@ -94,7 +103,7 @@ export default function Home() {
           className={`flex h-16 w-16 items-center justify-center rounded-full transition-all ${
             isListening
               ? "bg-red-500 scale-110 animate-pulse"
-              : "bg-white/10 hover:bg-white/20"
+              : "bg-white/10 hover:bg-white/20 backdrop-blur-sm"
           } disabled:opacity-30`}
         >
           <svg
@@ -108,10 +117,19 @@ export default function Home() {
           </svg>
         </button>
 
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-white/50 drop-shadow-lg">
           {isListening ? "Listening..." : "Tap to speak"}
         </p>
       </div>
+
+      {/* Jail bars overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 z-20 bg-repeat"
+        style={{
+          backgroundImage: "url('/jailbars.png')",
+          backgroundSize: "auto 100%",
+        }}
+      />
     </div>
   );
 }
